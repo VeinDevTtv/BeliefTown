@@ -1,0 +1,10 @@
+name: Feature request
+description: Propose an improvement or discuss a research extension.
+body:
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Problem and proposed change
+      description: Explain the use case, expected behavior, and alternatives considered.
+    validations:
+      required: true

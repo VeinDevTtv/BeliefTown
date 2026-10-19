@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "Please cite this software and specify the release, scenario manifest, and checkpoint hashes used."
+title: "BeliefTown: Verified Information Interventions for Debugging Partially Observable Game Agents"
+authors:
+  - name: "BeliefTown contributors"
+version: 1.0.0
+date-released: 2026-10-18
+license: MIT
+repository-code: "https://github.com/VeinDevTtv/BeliefTown"
+url: "https://github.com/VeinDevTtv/BeliefTown"
+abstract: "An open-source, finite-world NPC debugger combining timestamped evidence provenance, counterfactual replay, minimum-delivery interventions, exact execution verification, and learned graph-based candidate ordering."
+keywords:
+  - game AI
+  - NPC debugging
+  - belief states
+  - counterfactual replay
+  - graph neural networks
+  - verified interventions

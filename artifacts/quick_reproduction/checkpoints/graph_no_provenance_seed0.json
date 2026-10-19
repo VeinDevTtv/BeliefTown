@@ -1,0 +1,36 @@
+{
+  "kind": "graph_no_provenance",
+  "seed": 0,
+  "epochs": 3,
+  "best_epoch": 3,
+  "batch_size": 64,
+  "learning_rate": 0.002,
+  "train_samples": 1289,
+  "validation_samples": 293,
+  "validation_bce": 0.25770334243367554,
+  "selection": "lowest validation BCE only; test and OOD splits never used in optimization",
+  "torch_version": "2.10.0+cpu",
+  "training_seconds": 2.3642212980003023,
+  "parameter_count": 52961,
+  "manifest_sha256": "c61d7fe7ce0a2ef7c7dda734aef927b9d108d15ca601f64fac266001054110a7",
+  "history": [
+    {
+      "epoch": 1,
+      "train_bce": 0.4889507818074075,
+      "validation_bce": 0.2845343330004109,
+      "validation_accuracy": 0.9283276450511946
+    },
+    {
+      "epoch": 2,
+      "train_bce": 0.3332000904715829,
+      "validation_bce": 0.26596322922678123,
+      "validation_accuracy": 0.9283276450511946
+    },
+    {
+      "epoch": 3,
+      "train_bce": 0.1950656355144073,
+      "validation_bce": 0.25770334243367554,
+      "validation_accuracy": 0.9249146757679181
+    }
+  ]
+}

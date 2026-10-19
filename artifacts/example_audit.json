@@ -1,0 +1,687 @@
+{
+  "schema_version": 1,
+  "kind": "belieftown.audit",
+  "episode": {
+    "scene": {
+      "id": "demo-missed_relocation",
+      "seed": 7,
+      "rooms": [
+        "Workshop",
+        "Library",
+        "Garden",
+        "Hall"
+      ],
+      "edges": [
+        [
+          0,
+          3,
+          1.0
+        ],
+        [
+          1,
+          3,
+          1.0
+        ],
+        [
+          2,
+          3,
+          1.0
+        ],
+        [
+          0,
+          2,
+          1.5
+        ]
+      ],
+      "actors": [
+        {
+          "id": "courier",
+          "name": "Courier",
+          "room": 3,
+          "prior": [
+            0.32,
+            0.32,
+            0.32,
+            0.04
+          ],
+          "active": true
+        },
+        {
+          "id": "mira",
+          "name": "Mira",
+          "room": 3,
+          "prior": [
+            0.32,
+            0.32,
+            0.32,
+            0.04
+          ],
+          "active": true
+        },
+        {
+          "id": "theo",
+          "name": "Theo",
+          "room": 3,
+          "prior": [
+            0.32,
+            0.32,
+            0.32,
+            0.04
+          ],
+          "active": true
+        }
+      ],
+      "observations": [
+        {
+          "id": "old-workshop",
+          "observer": "theo",
+          "time": 0,
+          "reported_room": 0,
+          "reliability": 0.86,
+          "kind": "sighting",
+          "likelihood": null
+        },
+        {
+          "id": "new-library",
+          "observer": "mira",
+          "time": 3,
+          "reported_room": 1,
+          "reliability": 0.94,
+          "kind": "sighting",
+          "likelihood": null
+        },
+        {
+          "id": "garden-glimpse",
+          "observer": "theo",
+          "time": 2,
+          "reported_room": 2,
+          "reliability": 0.42,
+          "kind": "sighting",
+          "likelihood": null
+        },
+        {
+          "id": "hall-empty",
+          "observer": "courier",
+          "time": 4,
+          "reported_room": 3,
+          "reliability": 1.0,
+          "kind": "inspection_negative",
+          "likelihood": [
+            1.0,
+            1.0,
+            1.0,
+            0.0
+          ]
+        }
+      ],
+      "messages": [
+        {
+          "id": "old-to-courier",
+          "root_id": "old-workshop",
+          "sender": "theo",
+          "recipient": "courier",
+          "time": 1,
+          "parent_id": null
+        },
+        {
+          "id": "old-to-mira",
+          "root_id": "old-workshop",
+          "sender": "theo",
+          "recipient": "mira",
+          "time": 1,
+          "parent_id": null
+        },
+        {
+          "id": "rumor-back",
+          "root_id": "old-workshop",
+          "sender": "mira",
+          "recipient": "theo",
+          "time": 2,
+          "parent_id": "old-to-mira"
+        }
+      ],
+      "transitions": [
+        [
+          [
+            0.8500000000000001,
+            0.05,
+            0.05,
+            0.05
+          ],
+          [
+            0.05,
+            0.8500000000000001,
+            0.05,
+            0.05
+          ],
+          [
+            0.05,
+            0.05,
+            0.8500000000000001,
+            0.05
+          ],
+          [
+            0.05,
+            0.05,
+            0.05,
+            0.8500000000000001
+          ]
+        ],
+        [
+          [
+            0.8500000000000001,
+            0.05,
+            0.05,
+            0.05
+          ],
+          [
+            0.05,
+            0.8500000000000001,
+            0.05,
+            0.05
+          ],
+          [
+            0.05,
+            0.05,
+            0.8500000000000001,
+            0.05
+          ],
+          [
+            0.05,
+            0.05,
+            0.05,
+            0.8500000000000001
+          ]
+        ],
+        [
+          [
+            0.8500000000000001,
+            0.05,
+            0.05,
+            0.05
+          ],
+          [
+            0.05,
+            0.8500000000000001,
+            0.05,
+            0.05
+          ],
+          [
+            0.05,
+            0.05,
+            0.8500000000000001,
+            0.05
+          ],
+          [
+            0.05,
+            0.05,
+            0.05,
+            0.8500000000000001
+          ]
+        ],
+        [
+          [
+            0.8500000000000001,
+            0.05,
+            0.05,
+            0.05
+          ],
+          [
+            0.05,
+            0.8500000000000001,
+            0.05,
+            0.05
+          ],
+          [
+            0.05,
+            0.05,
+            0.8500000000000001,
+            0.05
+          ],
+          [
+            0.05,
+            0.05,
+            0.05,
+            0.8500000000000001
+          ]
+        ],
+        [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      ],
+      "truth": [
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "search_start": 4,
+      "horizon": 15,
+      "channels": [
+        [
+          "courier",
+          "mira"
+        ],
+        [
+          "courier",
+          "theo"
+        ],
+        [
+          "mira",
+          "courier"
+        ],
+        [
+          "mira",
+          "theo"
+        ],
+        [
+          "theo",
+          "courier"
+        ],
+        [
+          "theo",
+          "mira"
+        ]
+      ],
+      "inspection_cost": 1.0,
+      "family": "missed_relocation",
+      "description": "An old workshop report competes with an unseen library observation.",
+      "schema_version": 1
+    },
+    "mode": "provenance",
+    "suppress_observations": [],
+    "suppress_messages": [],
+    "patches": {}
+  },
+  "time": 4,
+  "record": {
+    "status": "verified_minimum_within_bounds",
+    "patch": [
+      {
+        "sender": "mira",
+        "recipient": "courier",
+        "root_id": "new-library"
+      }
+    ],
+    "verification": {
+      "feasible": true,
+      "legal": true,
+      "constraints_satisfied": true,
+      "action": 1,
+      "before_belief": [
+        0.6057732764750595,
+        0.19711336176247024,
+        0.19711336176247024,
+        0.0
+      ],
+      "after_belief": [
+        0.11729824360546508,
+        0.8131791076900535,
+        0.06952264870448141,
+        0.0
+      ],
+      "reason": "verified"
+    },
+    "verifier_calls": 2,
+    "candidates": [
+      {
+        "sender": "mira",
+        "recipient": "courier",
+        "root_id": "new-library"
+      },
+      {
+        "sender": "mira",
+        "recipient": "courier",
+        "root_id": "old-workshop"
+      },
+      {
+        "sender": "theo",
+        "recipient": "courier",
+        "root_id": "garden-glimpse"
+      },
+      {
+        "sender": "theo",
+        "recipient": "courier",
+        "root_id": "old-workshop"
+      }
+    ],
+    "checked_per_size": {
+      "0": 1,
+      "1": 1,
+      "2": 0,
+      "3": 0
+    },
+    "all_smaller_checked": true,
+    "elapsed_seconds": 0.0015756000066176057,
+    "ranking_seconds": 7.71999912103638e-05,
+    "method": "heuristic",
+    "problem": {
+      "target_actor": "courier",
+      "target_room": 1,
+      "max_size": 3,
+      "protected_actors": [],
+      "candidate_limit": 24
+    },
+    "checkpoint_hash": "a8892181105b35339d8e7eb2f57bf11cf2e5085919930036f94ee6cead01812d",
+    "scene_hash": "8e9b47833470670bb6d19276eb71c3ff49ba258a20744d452ea4ba52e00735a6",
+    "candidate_space_size": 15,
+    "budget": null,
+    "witness_trace": [
+      {
+        "patch": [],
+        "feasible": false
+      },
+      {
+        "patch": [
+          "5fcb61dd272331a5"
+        ],
+        "feasible": true
+      }
+    ],
+    "schema_version": 1,
+    "scope": "Minimum delivery count within the recorded finite candidate universe and max_size",
+    "software": {
+      "belieftown": "1.0.0",
+      "python": "3.13.1",
+      "numpy": "2.2.4",
+      "platform": "Windows-11-10.0.26200-SP0"
+    },
+    "candidate_hash": "985492e2a5f040e8e06c2151fe5c4a5ada8de7c7fb2f76efa0d05c66d7622c9a"
+  },
+  "model_metadata": null
+}

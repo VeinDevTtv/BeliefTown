@@ -1,0 +1,826 @@
+{
+  "memory": {
+    "peak_process_rss_mb": 368.421875,
+    "scope": "whole evaluation process including all loaded checkpoints; not a per-method measurement"
+  },
+  "schema_version": 1,
+  "protocol": {
+    "split_unit": "whole scene",
+    "training_seeds": [
+      0
+    ],
+    "confidence_intervals": "95% nonparametric bootstrap over scene means; seeds averaged within scene",
+    "latency": "steady-state CPU search, includes graph construction and ranking, excludes model loading and scene creation",
+    "budget": "verifier-call prefixes, not measured deadline success",
+    "minimum_scope": "recorded candidate universe; max patch size 3",
+    "limit": null
+  },
+  "environment": {
+    "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+    "numpy": "2.3.5",
+    "platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+    "processor": "",
+    "cpu_threads": 1
+  },
+  "checkpoint_hashes": {
+    "graph_seed0": "35bb04539850a99f5f6a52d5a8464638e7e6999e414009604288af6dee956f6e",
+    "mlp_seed0": "e1f8b7f3b0924d1e6ace33a18a84c00052c375beb06ee2f7f93ad3d7b7f5e924",
+    "graph_no_provenance_seed0": "6d72261d449d0a97ae21b56a54304a839f76c64b35b349e49ddf37cc7d719367"
+  },
+  "dataset_manifest_sha256": "c61d7fe7ce0a2ef7c7dda734aef927b9d108d15ca601f64fac266001054110a7",
+  "elapsed_seconds": 4.455032160999963,
+  "summary": [
+    {
+      "split": "ood",
+      "method": "graph",
+      "runs": 6,
+      "verifier_calls": {
+        "mean": 78.33333333333333,
+        "low": 49.0,
+        "high": 93.0,
+        "n_scenes": 6
+      },
+      "latency_ms": {
+        "mean": 83.84815099990799,
+        "low": 50.72264499987492,
+        "high": 108.18676266664322,
+        "n_scenes": 6
+      },
+      "ranking_ms": {
+        "mean": 37.164289499893734,
+        "low": 23.706262166645804,
+        "high": 47.32468783322474,
+        "n_scenes": 6
+      },
+      "solvable_latency_ms": {
+        "mean": 6.347825999910128,
+        "low": 6.347825999910128,
+        "high": 6.347825999910128,
+        "n_scenes": 1
+      },
+      "solvable_calls": {
+        "mean": 5.0,
+        "low": 5.0,
+        "high": 5.0,
+        "n_scenes": 1
+      },
+      "gap": {
+        "mean": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n_scenes": 1
+      },
+      "correctness": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 6
+      },
+      "success_at_4": {
+        "mean": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n_scenes": 1
+      },
+      "success_at_16": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 1
+      }
+    },
+    {
+      "split": "ood",
+      "method": "graph_no_provenance",
+      "runs": 6,
+      "verifier_calls": {
+        "mean": 78.5,
+        "low": 49.5,
+        "high": 93.0,
+        "n_scenes": 6
+      },
+      "latency_ms": {
+        "mean": 84.47428550001253,
+        "low": 51.225584166786575,
+        "high": 108.89539983342426,
+        "n_scenes": 6
+      },
+      "ranking_ms": {
+        "mean": 34.547592000156634,
+        "low": 21.648993049867233,
+        "high": 43.820636666623614,
+        "n_scenes": 6
+      },
+      "solvable_latency_ms": {
+        "mean": 5.806377000226348,
+        "low": 5.806377000226348,
+        "high": 5.806377000226348,
+        "n_scenes": 1
+      },
+      "solvable_calls": {
+        "mean": 6.0,
+        "low": 6.0,
+        "high": 6.0,
+        "n_scenes": 1
+      },
+      "gap": {
+        "mean": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n_scenes": 1
+      },
+      "correctness": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 6
+      },
+      "success_at_4": {
+        "mean": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n_scenes": 1
+      },
+      "success_at_16": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 1
+      }
+    },
+    {
+      "split": "ood",
+      "method": "heuristic",
+      "runs": 6,
+      "verifier_calls": {
+        "mean": 79.0,
+        "low": 51.0,
+        "high": 93.0,
+        "n_scenes": 6
+      },
+      "latency_ms": {
+        "mean": 51.31296166678112,
+        "low": 30.19584966674908,
+        "high": 71.08503416679923,
+        "n_scenes": 6
+      },
+      "ranking_ms": {
+        "mean": 0.6136366665335421,
+        "low": 0.36111766643405946,
+        "high": 0.8288486662119491,
+        "n_scenes": 6
+      },
+      "solvable_latency_ms": {
+        "mean": 3.35899799983963,
+        "low": 3.35899799983963,
+        "high": 3.35899799983963,
+        "n_scenes": 1
+      },
+      "solvable_calls": {
+        "mean": 9.0,
+        "low": 9.0,
+        "high": 9.0,
+        "n_scenes": 1
+      },
+      "gap": {
+        "mean": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n_scenes": 1
+      },
+      "correctness": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 6
+      },
+      "success_at_4": {
+        "mean": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n_scenes": 1
+      },
+      "success_at_16": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 1
+      }
+    },
+    {
+      "split": "ood",
+      "method": "mlp",
+      "runs": 6,
+      "verifier_calls": {
+        "mean": 78.5,
+        "low": 49.5,
+        "high": 93.0,
+        "n_scenes": 6
+      },
+      "latency_ms": {
+        "mean": 72.64407166674876,
+        "low": 44.13092966675928,
+        "high": 96.56420466687148,
+        "n_scenes": 6
+      },
+      "ranking_ms": {
+        "mean": 25.292210333418552,
+        "low": 15.828917237632824,
+        "high": 32.847459499938246,
+        "n_scenes": 6
+      },
+      "solvable_latency_ms": {
+        "mean": 4.294154000035633,
+        "low": 4.294154000035633,
+        "high": 4.294154000035633,
+        "n_scenes": 1
+      },
+      "solvable_calls": {
+        "mean": 6.0,
+        "low": 6.0,
+        "high": 6.0,
+        "n_scenes": 1
+      },
+      "gap": {
+        "mean": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n_scenes": 1
+      },
+      "correctness": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 6
+      },
+      "success_at_4": {
+        "mean": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n_scenes": 1
+      },
+      "success_at_16": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 1
+      }
+    },
+    {
+      "split": "ood",
+      "method": "uninformed",
+      "runs": 6,
+      "verifier_calls": {
+        "mean": 78.0,
+        "low": 48.0,
+        "high": 93.0,
+        "n_scenes": 6
+      },
+      "latency_ms": {
+        "mean": 45.18400116671728,
+        "low": 26.646733500001574,
+        "high": 60.69403493337971,
+        "n_scenes": 6
+      },
+      "ranking_ms": {
+        "mean": 0.006242999916139524,
+        "low": 0.004433458440189497,
+        "high": 0.007770666267485164,
+        "n_scenes": 6
+      },
+      "solvable_latency_ms": {
+        "mean": 1.175062000129401,
+        "low": 1.175062000129401,
+        "high": 1.175062000129401,
+        "n_scenes": 1
+      },
+      "solvable_calls": {
+        "mean": 3.0,
+        "low": 3.0,
+        "high": 3.0,
+        "n_scenes": 1
+      },
+      "gap": {
+        "mean": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n_scenes": 1
+      },
+      "correctness": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 6
+      },
+      "success_at_4": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 1
+      },
+      "success_at_16": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 1
+      }
+    },
+    {
+      "split": "test",
+      "method": "graph",
+      "runs": 12,
+      "verifier_calls": {
+        "mean": 45.5,
+        "low": 26.666666666666668,
+        "high": 66.41666666666667,
+        "n_scenes": 12
+      },
+      "latency_ms": {
+        "mean": 37.681437999973845,
+        "low": 22.461745745852113,
+        "high": 54.886010272881926,
+        "n_scenes": 12
+      },
+      "ranking_ms": {
+        "mean": 17.41905058334699,
+        "low": 10.97597653949644,
+        "high": 24.681745875115716,
+        "n_scenes": 12
+      },
+      "solvable_latency_ms": {
+        "mean": 2.148970999996891,
+        "low": 2.0560960001603235,
+        "high": 2.2418459998334583,
+        "n_scenes": 2
+      },
+      "solvable_calls": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 2
+      },
+      "gap": {
+        "mean": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n_scenes": 2
+      },
+      "correctness": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 12
+      },
+      "success_at_4": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 2
+      },
+      "success_at_16": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 2
+      }
+    },
+    {
+      "split": "test",
+      "method": "graph_no_provenance",
+      "runs": 12,
+      "verifier_calls": {
+        "mean": 45.5,
+        "low": 26.666666666666668,
+        "high": 66.41666666666667,
+        "n_scenes": 12
+      },
+      "latency_ms": {
+        "mean": 35.1248255834283,
+        "low": 21.182745818846154,
+        "high": 50.35252733552794,
+        "n_scenes": 12
+      },
+      "ranking_ms": {
+        "mean": 16.223297916591644,
+        "low": 10.004510202215519,
+        "high": 22.986748826823103,
+        "n_scenes": 12
+      },
+      "solvable_latency_ms": {
+        "mean": 1.3797090000480239,
+        "low": 1.1060100000577222,
+        "high": 1.6534080000383256,
+        "n_scenes": 2
+      },
+      "solvable_calls": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 2
+      },
+      "gap": {
+        "mean": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n_scenes": 2
+      },
+      "correctness": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 12
+      },
+      "success_at_4": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 2
+      },
+      "success_at_16": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 2
+      }
+    },
+    {
+      "split": "test",
+      "method": "heuristic",
+      "runs": 12,
+      "verifier_calls": {
+        "mean": 45.5,
+        "low": 26.666666666666668,
+        "high": 66.41666666666667,
+        "n_scenes": 12
+      },
+      "latency_ms": {
+        "mean": 20.066771333404176,
+        "low": 10.701174412701183,
+        "high": 31.05863204169546,
+        "n_scenes": 12
+      },
+      "ranking_ms": {
+        "mean": 0.36903833332265396,
+        "low": 0.1895488665904092,
+        "high": 0.5920389979934271,
+        "n_scenes": 12
+      },
+      "solvable_latency_ms": {
+        "mean": 0.9390110001277208,
+        "low": 0.4865050000262272,
+        "high": 1.3915170002292143,
+        "n_scenes": 2
+      },
+      "solvable_calls": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 2
+      },
+      "gap": {
+        "mean": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n_scenes": 2
+      },
+      "correctness": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 12
+      },
+      "success_at_4": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 2
+      },
+      "success_at_16": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 2
+      }
+    },
+    {
+      "split": "test",
+      "method": "mlp",
+      "runs": 12,
+      "verifier_calls": {
+        "mean": 45.5,
+        "low": 26.666666666666668,
+        "high": 66.41666666666667,
+        "n_scenes": 12
+      },
+      "latency_ms": {
+        "mean": 29.845054916677327,
+        "low": 17.60570368963954,
+        "high": 43.38584326880171,
+        "n_scenes": 12
+      },
+      "ranking_ms": {
+        "mean": 10.912085999999968,
+        "low": 6.744849593600104,
+        "high": 15.532543083704315,
+        "n_scenes": 12
+      },
+      "solvable_latency_ms": {
+        "mean": 1.0575075002634549,
+        "low": 0.9498560002612066,
+        "high": 1.165159000265703,
+        "n_scenes": 2
+      },
+      "solvable_calls": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 2
+      },
+      "gap": {
+        "mean": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n_scenes": 2
+      },
+      "correctness": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 12
+      },
+      "success_at_4": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 2
+      },
+      "success_at_16": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 2
+      }
+    },
+    {
+      "split": "test",
+      "method": "uninformed",
+      "runs": 12,
+      "verifier_calls": {
+        "mean": 45.5,
+        "low": 26.666666666666668,
+        "high": 66.41666666666667,
+        "n_scenes": 12
+      },
+      "latency_ms": {
+        "mean": 20.532578999943023,
+        "low": 10.966427018644254,
+        "high": 31.519398579063317,
+        "n_scenes": 12
+      },
+      "ranking_ms": {
+        "mean": 0.005445083237039701,
+        "low": 0.004077706176038494,
+        "high": 0.006770504076788104,
+        "n_scenes": 12
+      },
+      "solvable_latency_ms": {
+        "mean": 0.36317649983175215,
+        "low": 0.31222500001604203,
+        "high": 0.4141279996474623,
+        "n_scenes": 2
+      },
+      "solvable_calls": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 2
+      },
+      "gap": {
+        "mean": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n_scenes": 2
+      },
+      "correctness": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 12
+      },
+      "success_at_4": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 2
+      },
+      "success_at_16": {
+        "mean": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n_scenes": 2
+      }
+    }
+  ],
+  "belief_summary": [
+    {
+      "split": "test",
+      "mode": "provenance",
+      "brier": {
+        "mean": 0.35433515605967986,
+        "low": 0.1416307180532198,
+        "high": 0.5982213076733254,
+        "n_scenes": 12
+      }
+    },
+    {
+      "split": "test",
+      "mode": "naive",
+      "brier": {
+        "mean": 0.4195129651647627,
+        "low": 0.1633056878504438,
+        "high": 0.7176208795952447,
+        "n_scenes": 12
+      }
+    },
+    {
+      "split": "test",
+      "mode": "last_report",
+      "brier": {
+        "mean": 0.6384514383909808,
+        "low": 0.3841573465057252,
+        "high": 0.8850748902034632,
+        "n_scenes": 12
+      }
+    },
+    {
+      "split": "ood",
+      "mode": "provenance",
+      "brier": {
+        "mean": 0.6561280557674402,
+        "low": 0.24321048231598286,
+        "high": 1.0690456292188975,
+        "n_scenes": 6
+      }
+    },
+    {
+      "split": "ood",
+      "mode": "naive",
+      "brier": {
+        "mean": 0.6561264966795638,
+        "low": 0.24320736414023023,
+        "high": 1.0690456292188975,
+        "n_scenes": 6
+      }
+    },
+    {
+      "split": "ood",
+      "mode": "last_report",
+      "brier": {
+        "mean": 0.6245125183406252,
+        "low": 0.30397439164105927,
+        "high": 0.927628917535028,
+        "n_scenes": 6
+      }
+    }
+  ],
+  "paired_comparisons": [
+    {
+      "split": "test",
+      "method": "uninformed",
+      "reference": "heuristic",
+      "calls_difference": {
+        "mean": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n_scenes": 12
+      },
+      "latency_ms_difference": {
+        "mean": 0.4658076665388459,
+        "low": -0.858327198118521,
+        "high": 1.7528826603618577,
+        "n_scenes": 12
+      }
+    },
+    {
+      "split": "test",
+      "method": "graph",
+      "reference": "heuristic",
+      "calls_difference": {
+        "mean": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n_scenes": 12
+      },
+      "latency_ms_difference": {
+        "mean": 17.614666666569672,
+        "low": 11.484661501999463,
+        "high": 23.829533870761562,
+        "n_scenes": 12
+      }
+    },
+    {
+      "split": "test",
+      "method": "mlp",
+      "reference": "heuristic",
+      "calls_difference": {
+        "mean": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n_scenes": 12
+      },
+      "latency_ms_difference": {
+        "mean": 9.77828358327315,
+        "low": 6.350456547921604,
+        "high": 13.219736543717886,
+        "n_scenes": 12
+      }
+    },
+    {
+      "split": "test",
+      "method": "graph_no_provenance",
+      "reference": "heuristic",
+      "calls_difference": {
+        "mean": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n_scenes": 12
+      },
+      "latency_ms_difference": {
+        "mean": 15.058054250024119,
+        "low": 9.631022879173656,
+        "high": 20.466214981310788,
+        "n_scenes": 12
+      }
+    },
+    {
+      "split": "ood",
+      "method": "uninformed",
+      "reference": "heuristic",
+      "calls_difference": {
+        "mean": -1.0,
+        "low": -3.0,
+        "high": 0.0,
+        "n_scenes": 6
+      },
+      "latency_ms_difference": {
+        "mean": -6.12896050006384,
+        "low": -23.69435183322821,
+        "high": 5.882567166509034,
+        "n_scenes": 6
+      }
+    },
+    {
+      "split": "ood",
+      "method": "graph",
+      "reference": "heuristic",
+      "calls_difference": {
+        "mean": -0.6666666666666666,
+        "low": -2.0,
+        "high": 0.0,
+        "n_scenes": 6
+      },
+      "latency_ms_difference": {
+        "mean": 32.53518933312686,
+        "low": 17.38941316655958,
+        "high": 46.082721166385454,
+        "n_scenes": 6
+      }
+    },
+    {
+      "split": "ood",
+      "method": "mlp",
+      "reference": "heuristic",
+      "calls_difference": {
+        "mean": -0.5,
+        "low": -1.5,
+        "high": 0.0,
+        "n_scenes": 6
+      },
+      "latency_ms_difference": {
+        "mean": 21.33110999996764,
+        "low": 2.5814959459088036,
+        "high": 38.91170783314616,
+        "n_scenes": 6
+      }
+    },
+    {
+      "split": "ood",
+      "method": "graph_no_provenance",
+      "reference": "heuristic",
+      "calls_difference": {
+        "mean": -0.5,
+        "low": -1.5,
+        "high": 0.0,
+        "n_scenes": 6
+      },
+      "latency_ms_difference": {
+        "mean": 33.161323833231414,
+        "low": 15.780231333489306,
+        "high": 50.11433983304414,
+        "n_scenes": 6
+      }
+    }
+  ],
+  "all_searches_correct": true,
+  "searches": 90
+}

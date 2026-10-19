@@ -1,0 +1,23 @@
+name: Bug report
+description: Report a reproducible problem with BeliefTown.
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Include commands, scene family or JSON, random seed, and a minimal audit or replay when relevant. Remove private data and credentials.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include OS, Python version, BeliefTown version, and output from python -m belieftown doctor.
+    validations:
+      required: true

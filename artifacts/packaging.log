@@ -1,0 +1,10 @@
+WARNING: The directory '/home/oai/.cache/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.
+Processing /mnt/data/belieftown
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: belieftown
+  Building wheel for belieftown (pyproject.toml): started
+  Building wheel for belieftown (pyproject.toml): finished with status 'done'
+  Created wheel for belieftown: filename=belieftown-1.0.0-py3-none-any.whl size=67973 sha256=a7c981e1051a076b6a951ab16d1b9bec3944c661b7e67542624932a1b1402b4a
+  Stored in directory: /tmp/pip-ephem-wheel-cache-ave16yyf/wheels/8e/3d/75/29b26b211ce300698a49f7dfb07926cda3784c841873f39fe2
+Successfully built belieftown

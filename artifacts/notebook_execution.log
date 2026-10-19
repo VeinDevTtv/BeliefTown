@@ -1,0 +1,34 @@
+Executed 01_beliefs_and_evidence.ipynb
+Executed 02_counterfactual_debugger.ipynb
+Executed 03_train_ranker.ipynb
+Executed 04_evaluation.ipynb
+{
+  "allow_errors": false,
+  "run_root": null,
+  "notebooks": [
+    {
+      "file": "01_beliefs_and_evidence.ipynb",
+      "code_cells": 6,
+      "errors": 0,
+      "execution_seconds": 3.443376679999801
+    },
+    {
+      "file": "02_counterfactual_debugger.ipynb",
+      "code_cells": 6,
+      "errors": 0,
+      "execution_seconds": 3.2790563049998127
+    },
+    {
+      "file": "03_train_ranker.ipynb",
+      "code_cells": 5,
+      "errors": 0,
+      "execution_seconds": 21.28258716299979
+    },
+    {
+      "file": "04_evaluation.ipynb",
+      "code_cells": 5,
+      "errors": 0,
+      "execution_seconds": 2.326534251999874
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+Training graph, seed 0
+Training mlp, seed 0
+Training graph_no_provenance, seed 0
+test: 12/12 scenes evaluated
+Executed 01_beliefs_and_evidence.ipynb
+Executed 02_counterfactual_debugger.ipynb
+Executed 03_train_ranker.ipynb
+Executed 04_evaluation.ipynb
+{
+  "profile": "quick",
+  "all_searches_correct": true,
+  "output": "artifacts/quick_reproduction"
+}
