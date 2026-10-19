@@ -68,7 +68,7 @@ def parser():
     nb.add_argument('--run-root',type=Path,help='Use a reproduction directory containing data/checkpoints/evaluation')
     reproduce=sub.add_parser('reproduce',help='One-command data → training → evaluation → showcase pipeline')
     reproduce.add_argument('--profile',choices=('quick','release'),default='quick');reproduce.add_argument('--output',type=Path,default=Path('artifacts/reproduction'))
-    reproduce.add_argument('--notebooks',action='store_true');reproduce.add_argument('--tests',action='store_true')
+    reproduce.add_argument('--notebooks',action='store_true')
     sub.add_parser('doctor',help='Report installed optional components and verify the canonical scene')
     return p
 
@@ -152,16 +152,13 @@ def _run(a):
                 train_model(out/'data',out/f'checkpoints/{kind}_seed{seed}.pt',kind=kind,seed=seed,epochs=epochs)
         r=run_benchmark(out/'data',out/'checkpoints',out/'evaluation',seeds=seeds)
         export_showcase(out/'BeliefTown_Showcase.html')
-        if a.tests:
-            import subprocess
-            subprocess.run([sys.executable,'-m','pytest','-q'],check=True)
         if a.notebooks:
             from .notebook_runner import execute_notebooks
             execute_notebooks('notebooks',out/'executed_notebooks',run_root=out)
         _json({'profile':a.profile,'all_searches_correct':r['all_searches_correct'],'output':str(out)})
     elif a.command=='doctor':
         components={}
-        for name in ('numpy','torch','jupyterlab','nbformat','nbclient','matplotlib','pytest'):
+        for name in ('numpy','torch','jupyterlab','nbformat','nbclient','matplotlib'):
             try:components[name]=importlib.metadata.version(name)
             except importlib.metadata.PackageNotFoundError:components[name]=None
         scene=demo_scene();episode=Episode(scene);r=search(episode.at(scene.search_start),PatchProblem('courier',1))

@@ -54,7 +54,7 @@ The verifier reconstructs the scene and snapshot, checks the candidate-space has
 jupyter lab notebooks
 ```
 
-Run the four notebooks in order. They contain executable mathematics, debugger operations, actual training, and the measured evaluation. The already executed copies are in `artifacts/executed_notebooks/`.
+Run the four notebooks in order. They contain executable mathematics, debugger operations, actual training, and the measured evaluation. Saved figures and measured outputs are included with the executed notebooks in `artifacts/executed_notebooks/`.
 
 The live debugger's launch cell starts a loopback server owned by that notebook kernel. Keep the kernel running. Reopening an old saved notebook does not restart its old server; rerun the cell. A separate-tab link is provided alongside the embedded view. Hosted notebook platforms may require their own port support; this project does not expose a public tunnel.
 
@@ -63,10 +63,10 @@ The live debugger's launch cell starts a loopback server owned by that notebook 
 ```bash
 python -m belieftown generate --seed 42 --rooms 5 --family conflicting_evidence --output scenarios/custom.json
 python -m belieftown demo --scene scenarios/custom.json
-python -m belieftown reproduce --profile quick --tests
+python -m belieftown reproduce --profile quick
 ```
 
-Use the scene-format guide before manually editing likelihoods, transition matrices, or provenance chains. The quick pipeline creates separate data/checkpoints/results; it does not replace the released experiment. Its fewer scenes and epochs make it an integration exercise, not the published benchmark.
+Use the scene-format guide before manually editing likelihoods, transition matrices, or provenance chains. The quick pipeline creates separate data/checkpoints/results; it does not replace the released experiment. Its smaller dataset and shorter training run make it a quick demonstration, not the published benchmark.
 
 ## Troubleshooting
 
@@ -78,18 +78,8 @@ Use the scene-format guide before manually editing likelihoods, transition matri
 
 **The neural model is slower:** that is also the released result on these small scenes. Heuristic ordering is the default deliberately.
 
-## Optional browser acceptance tests and launch media
+## Walkthrough media
 
-The repository includes `artifacts/walkthrough/BeliefTown_Walkthrough.mp4`, a captioned, silent 60-second walkthrough of the current monochrome interface, assembled from actual UI states. It is a paced capture sequence, not a claim of continuous real-time performance. `artifacts/walkthrough/manifest.json` records its source frames and captions.
+The repository includes `artifacts/walkthrough/BeliefTown_Walkthrough.mp4`, a captioned, silent 60-second walkthrough of the current monochrome interface, assembled from actual UI states. It is a paced capture sequence, not a claim of continuous real-time performance. `artifacts/walkthrough/manifest.json` records the source frames; `captions.srt` provides matching subtitles.
 
-To rerun browser checks, install the optional browser extra and Chromium:
-
-```bash
-python -m pip install -e ".[browser]"
-python -m playwright install chromium
-python scripts/browser_smoke.py
-```
-
-A system Chromium binary is also accepted; set `CHROMIUM_PATH` when needed. The supplied environment blocked loopback navigation in its browser, so those DOM tests used a transparent binding to the real Python application service; separate HTTP tests exercised authentication, origin checks, and API responses. See the verification report for the precise scope.
-
-Rebuild the walkthrough with `python scripts/make_walkthrough.py`; this additionally requires ffmpeg. No music, external artwork, or font files are redistributed.
+Rebuild the walkthrough with `python scripts/make_walkthrough.py`; this requires the optional browser extra, Chromium, and ffmpeg. No music, external artwork, or font files are redistributed.

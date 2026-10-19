@@ -20,7 +20,7 @@ Run all cells in order. The training notebook uses the bundled labeled data and 
 
 The live application cell in notebook 02 starts a local server and validates its state endpoint. An embedded frame and a separate-tab link refer to that live session. Keep the kernel running. Saved executed outputs preserve figures and measurements, but an old live-server URL is not permanently hosted. Rerun the launch cell when reopening a notebook.
 
-## Headless verification
+## Execute the notebooks and save outputs
 
 ```bash
 python -m belieftown notebooks
@@ -28,19 +28,11 @@ python -m belieftown notebooks
 
 This uses nbclient with errors disallowed and runs all four notebooks in fresh kernels. Results are saved to `artifacts/executed_notebooks/` with `execution_report.json`. The notebook source remains unexecuted and portable. The runner locates the repository from each notebook's directory.
 
-Matplotlib figures are rendered inline; the release includes actual PNG figure outputs, not only textual figure objects. The live notebook server is intentionally tested during execution and ends with the execution kernel.
+Matplotlib figures are rendered inline; the release includes the resulting figures, not only textual figure objects. The live notebook server runs only while its execution kernel is active.
 
 ## Hosted notebook limitations
 
 This release targets a local Python/Jupyter installation. A browser viewing a remotely hosted notebook cannot necessarily access a loopback server on that remote machine. The project does not attempt automatic tunnels, authentication bypasses, or public deployment. Use the static HTML showcase for a transport-independent demonstration, or run the full studio locally.
-
-## NotebookLM / Gemini Notebook
-
-This tool is optional for literature work and is not required to run BeliefTown. Suggested source material is `MATH.md`, `MODEL_CARD.md`, `DATA_CARD.md`, `REFERENCES.md`, the measured results, and the cited original papers obtained separately. Do not mistake an AI-generated literature summary for experimental evidence.
-
-A useful research prompt is: “Separate implemented behavior, measured findings, mathematical assumptions, and proposed extensions. For every experimental statement, identify its supporting result table or code location. Identify any claim stronger than the evidence supports.”
-
-No account, cloud notebook, or connected application was created as part of this release. The reproducible artifact is the version-controlled Jupyter project.
 
 ## Rebuilt experiments
 

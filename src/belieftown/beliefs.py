@@ -83,7 +83,7 @@ def last_report_belief(prior, transitions, received: list[Observation], time: in
 
 
 def brute_force_belief(prior, transitions, roots, time: int) -> np.ndarray:
-    """Independent exponential reference for tests, not the runtime implementation."""
+    """Independent exponential reference for small examples, not runtime use."""
     n = len(prior)
     if n**(time+1) > 2_000_000:
         raise ValueError("Reference enumeration intentionally limited to small cases")

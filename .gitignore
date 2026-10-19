@@ -1,9 +1,6 @@
 .venv/
 __pycache__/
 *.py[cod]
-.pytest_cache/
-.coverage
-htmlcov/
 *.egg-info/
 build/
 dist/
@@ -19,4 +16,3 @@ artifacts/notebook_run/
 .ruff_cache/
 .mypy_cache/
 artifacts/local_validation/
-artifacts/ci-*

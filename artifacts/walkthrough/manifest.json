@@ -2,39 +2,53 @@
   "kind": "captioned UI-state walkthrough",
   "duration_seconds": 60,
   "audio": false,
-  "transport": "Ravylo collaborative browser preview of the local Python Studio",
-  "capture_method": "six actual UI-state screenshots stitched into a paced sequence",
+  "transport": "actual Python Studio via in-process browser binding",
   "continuous_real_time_recording": false,
   "frames": [
     {
       "file": "01_private_beliefs.png",
       "duration_seconds": 7,
-      "caption": "Same world. Different evidence."
+      "caption": "Same world. Different evidence. The Courier chooses Workshop; the parcel is in Library."
     },
     {
       "file": "02_verified_patch.png",
-      "duration_seconds": 11,
-      "caption": "The exact solver verifies one minimum patch."
+      "duration_seconds": 7,
+      "caption": "Ask for a different decision. The solver verifies that one existing observation is enough."
     },
     {
       "file": "03_new_action.png",
-      "duration_seconds": 11,
-      "caption": "Mira's report changes the Courier's choice."
+      "duration_seconds": 7,
+      "caption": "Mira forwards new-library. The physical history stays fixed; the Courier now chooses Library."
     },
     {
       "file": "04_replay_step.png",
-      "duration_seconds": 11,
-      "caption": "Compare both replay branches."
+      "duration_seconds": 4,
+      "caption": "Matched replay: the two Couriers follow different evidence-driven routes."
     },
     {
-      "file": "05_evidence_controls.png",
-      "duration_seconds": 11,
-      "caption": "Inspect the evidence behind each decision."
+      "file": "05_replay_result.png",
+      "duration_seconds": 4,
+      "caption": "The patched branch reaches the parcel through a different decision\u2014not a forced action."
     },
     {
-      "file": "06_open_source.png",
-      "duration_seconds": 9,
-      "caption": "MIT licensed. Local Python. No API keys."
+      "file": "06_duplicate.png",
+      "duration_seconds": 8,
+      "caption": "Another copy is not another observation. The provenance-aware belief remains unchanged."
+    },
+    {
+      "file": "07_no_solution.png",
+      "duration_seconds": 8,
+      "caption": "Protect the target from new information: no solution within the declared bounds."
+    },
+    {
+      "file": "08_graph_ranker.png",
+      "duration_seconds": 8,
+      "caption": "A trained graph model may order candidates. Only exact execution verifies the result."
+    },
+    {
+      "file": "09_open_source.png",
+      "duration_seconds": 7,
+      "caption": "BeliefTown \u00b7 MIT \u00b7 Python + Jupyter \u00b7 Source, notebooks, checkpoints, and benchmark results."
     }
   ],
   "browser_errors": []

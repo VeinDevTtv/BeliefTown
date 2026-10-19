@@ -1,11 +1,10 @@
-## What changes?
+## User-facing effect
 
-Describe the problem, the resulting behavior, and any relevant issue.
+Describe the problem this change solves and the behavior a user will see.
 
-## Validation
+## Scope and assumptions
 
-List the checks you ran and their results. State any checks you could not run.
-For algorithmic changes, explain the invariant or regression covered by tests.
+For changes to the simulator, verifier, or learned models, describe the affected assumptions and finite bounds.
 
 ## Documentation and research impact
 

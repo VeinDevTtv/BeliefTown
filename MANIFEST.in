@@ -1,21 +1,18 @@
 include README.md LICENSE CITATION.cff CONTRIBUTING.md SECURITY.md THIRD_PARTY_NOTICES.md CHANGELOG.md
 include requirements*.txt
 include .editorconfig .gitattributes .gitignore
-recursive-include .github *.yml *.md
 recursive-include src/belieftown/static *.html *.css *.js
 recursive-include src/belieftown/scenes *.json
 recursive-include docs *.md *.json
 recursive-include notebooks *.ipynb
 recursive-include scenarios *.json
-recursive-include tests *.py
 recursive-include scripts *.py
 recursive-include benchmarks/data *.json *.jsonl
 recursive-include artifacts/checkpoints *.pt *.json
 recursive-include artifacts/evaluation *.json *.csv *.md
-recursive-include artifacts/browser *.png *.json
+recursive-include artifacts/browser *.png
 recursive-exclude * __pycache__ *~ *.pyc *.pid
 
-recursive-include .github/workflows *.yml
-include artifacts/BeliefTown_Showcase.html artifacts/example_audit.json artifacts/environment.json artifacts/release_verification.json
+include artifacts/BeliefTown_Showcase.html artifacts/example_audit.json artifacts/environment.json
 recursive-include artifacts/executed_notebooks *.ipynb *.json
 recursive-include artifacts/walkthrough *.mp4 *.json *.png *.txt

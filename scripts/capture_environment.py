@@ -13,7 +13,7 @@ from packaging.requirements import Requirement
 from packaging.utils import canonicalize_name
 
 ROOT=Path(__file__).resolve().parents[1]
-roots=['numpy','torch','jupyterlab','nbformat','nbclient','matplotlib','pytest','pytest-cov','setuptools','pip']
+roots=['numpy','torch','jupyterlab','nbformat','nbclient','matplotlib','setuptools','pip']
 queue=[(name,()) for name in roots];seen=set();versions={};missing=[]
 while queue:
     name,extras=queue.pop();key=(canonicalize_name(name),tuple(sorted(extras)))
@@ -37,7 +37,7 @@ header='''# Observed Linux / Python 3.13 CPU dependency closure for BeliefTown 1
 '''
 (ROOT/'requirements-lock.txt').write_text(header+'\n'.join(f'{name}=={version}' for name,version in sorted(versions.items()))+'\n', encoding="utf-8")
 report={'python':sys.version,'platform':platform.platform(),'machine':platform.machine(),
-        'dependency_snapshot_scope':'installed transitive closure for the declared all/dev/build components',
+        'dependency_snapshot_scope':'installed transitive closure for the declared all/build components',
         'versions':versions,'root_components':roots,
         'limitations':'No fresh network resolution or cross-platform installation was executed.'}
 try:

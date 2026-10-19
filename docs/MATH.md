@@ -200,7 +200,7 @@ The four result statuses are `verified_minimum_within_bounds`, `verified_feasibl
 
 An audit bundle contains the scene, replay controls, checkpoint and candidate hashes, problem definition, patch, before/after beliefs, verification result, bounded-search metadata, and software versions. `verify_bundle` regenerates the episode and executes the claim. It can enumerate every cheaper alternative independently of neural ordering. It also rejects changed candidate universes and fabricated verification fields.
 
-The auditor shares the simulator’s semantics; it is not a separately proved theorem prover. It checks logical execution claims, not whether an asserted timing measurement was honestly recorded. Tests and independent small references reduce implementation risk but do not establish universal bug-freedom.
+The auditor shares the simulator’s semantics; it is not a separately proved theorem prover. It checks logical execution claims, not whether an asserted timing measurement was honestly recorded. Independent reference calculations and small worked examples reduce implementation risk, but do not establish universal bug-freedom.
 
 ## 7. Learned graph ordering
 

@@ -101,6 +101,6 @@ The browser uses only bundled HTML, CSS, and JavaScript. It does not fetch fonts
 
 ## Extending safely
 
-Introduce a new likelihood through the observation schema and corresponding reference tests. Introduce a new patch operation by extending its formal legality, simultaneous semantics, audit representation, and exhaustive oracle before adding UI controls. Introduce a new learned ranker without changing verifier behavior.
+Introduce a new likelihood through the observation schema and explain its finite-state semantics. Introduce a new patch operation by extending its formal legality, simultaneous semantics, audit representation, and exhaustive oracle before adding UI controls. Introduce a new learned ranker without changing verifier behavior.
 
 Changing to moving targets, endogenous message policies, multi-object states, or nested beliefs is a model change, not a cosmetic extension. Such work needs a new mathematical contract and evaluation; the current certificates must not be relabeled as guarantees for it.

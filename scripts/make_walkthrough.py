@@ -28,13 +28,29 @@ with sync_playwright() as p:
     def binding(action,args):
         try:return {'ok':True,'value':service.dispatch(action,args)}
         except (ValueError,TypeError,KeyError) as e:return {'ok':False,'value':{'error':str(e)}}
-    page.expose_function('__belieftown_test_api',binding)
+    page.expose_function('__belieftown_walkthrough_api',binding)
     static=files('belieftown').joinpath('static')
     html=static.joinpath('index.html').read_text(encoding="utf-8").replace('__BOOTSTRAP__',json.dumps({'offline':False,'token':'local-service-binding'}))
     html=html.replace('<link rel="stylesheet" href="/styles.css">','<style>'+static.joinpath('styles.css').read_text(encoding="utf-8")+'</style>')
-    shim="window.fetch=async function(url,opts={}){const r=await window.__belieftown_test_api(url.split('/').pop(),JSON.parse(opts.body||'{}'));return {ok:r.ok,json:async()=>r.value};};"
+    shim="window.fetch=async function(url,opts={}){const r=await window.__belieftown_walkthrough_api(url.split('/').pop(),JSON.parse(opts.body||'{}'));return {ok:r.ok,json:async()=>r.value};};"
     html=html.replace('<script src="/app.js"></script>','<script>'+shim+static.joinpath('app.js').read_text(encoding="utf-8")+'</script>')
     page.set_content(html);page.wait_for_selector('.actor-card')
+    preview_out=ROOT/'artifacts/browser';preview_out.mkdir(parents=True,exist_ok=True)
+    def save_preview(filename,width,height,scale):
+        preview_service=Studio(checkpoint_dir=ROOT/'artifacts/checkpoints')
+        preview_page=browser.new_page(viewport={'width':width,'height':height},device_scale_factor=scale)
+        preview_page.on('pageerror',lambda error:errors.append(str(error)))
+        def preview_binding(action,args):
+            try:return {'ok':True,'value':preview_service.dispatch(action,args)}
+            except (ValueError,TypeError,KeyError) as e:return {'ok':False,'value':{'error':str(e)}}
+        preview_page.expose_function('__belieftown_walkthrough_api',preview_binding)
+        preview_page.set_content(html);preview_page.wait_for_selector('.actor-card')
+        preview_page.locator('#find').click();preview_page.wait_for_selector('#solution strong')
+        preview_page.evaluate('window.scrollTo(0,0)')
+        preview_page.screenshot(path=str(preview_out/filename))
+        preview_page.close()
+    save_preview('desktop.png',1440,1040,2)
+    save_preview('mobile.png',390,844,3)
     page.evaluate('''() => {const b=document.createElement('div'); b.id='walkthrough-caption';
     b.style.cssText='position:fixed;left:28px;right:28px;bottom:22px;z-index:999;background:#171717f5;border:1px solid #777;border-radius:10px;padding:18px 25px;color:#fff;font:600 24px/1.35 system-ui;box-shadow:0 8px 36px #0008;pointer-events:none';document.body.appendChild(b);}''')
     def shot(name,caption,duration,y=400):
@@ -63,7 +79,7 @@ with sync_playwright() as p:
     page.locator('#protect').uncheck();page.locator('#method').select_option('graph');page.locator('#find').click()
     page.wait_for_function("document.querySelector('#solution').textContent.includes('Verified minimum')")
     shot('08_graph_ranker','A trained graph model may order candidates. Only exact execution verifies the result.',8,400)
-    shot('09_open_source','BeliefTown \u00b7 MIT \u00b7 Python + Jupyter \u00b7 Source, tests, checkpoints, and honest benchmark results.',7,400)
+    shot('09_open_source','BeliefTown \u00b7 MIT \u00b7 Python + Jupyter \u00b7 Source, notebooks, checkpoints, and benchmark results.',7,400)
     browser.close()
 assert sum(x['duration_seconds'] for x in frames)==60
 assert not errors,errors
@@ -73,6 +89,16 @@ manifest={'kind':'captioned UI-state walkthrough','duration_seconds':60,'audio':
 (OUT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n', encoding="utf-8")
 concat=''.join(f"file '{x['file']}'\nduration {x['duration_seconds']}\n" for x in frames)+f"file '{frames[-1]['file']}'\n"
 (OUT/'frames.txt').write_text(concat, encoding="utf-8")
+def srt_timestamp(seconds):
+    hours, remainder = divmod(int(seconds), 3600)
+    minutes, seconds = divmod(remainder, 60)
+    return f'{hours:02}:{minutes:02}:{seconds:02},000'
+elapsed=0;subtitles=[]
+for number,frame in enumerate(frames,1):
+    end=elapsed+frame['duration_seconds']
+    subtitles.extend([str(number),f'{srt_timestamp(elapsed)} --> {srt_timestamp(end)}',frame['caption'],''])
+    elapsed=end
+(OUT/'captions.srt').write_text('\n'.join(subtitles), encoding="utf-8")
 ffmpeg=shutil.which('ffmpeg')
 if not ffmpeg:raise RuntimeError('ffmpeg is required to encode the walkthrough')
 subprocess.run([ffmpeg,'-y','-f','concat','-safe','0','-i','frames.txt','-t','60','-vf','fps=24,format=yuv420p',

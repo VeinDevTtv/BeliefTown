@@ -1,23 +1,35 @@
 1
 00:00:00,000 --> 00:00:07,000
-Same world. Different evidence.
+Same world. Different evidence. The Courier chooses Workshop; the parcel is in Library.
 
 2
-00:00:07,000 --> 00:00:18,000
-The exact solver verifies one minimum patch.
+00:00:07,000 --> 00:00:14,000
+Ask for a different decision. The solver verifies that one existing observation is enough.
 
 3
-00:00:18,000 --> 00:00:29,000
-Mira's report changes the Courier's choice.
+00:00:14,000 --> 00:00:21,000
+Mira forwards new-library. The physical history stays fixed; the Courier now chooses Library.
 
 4
-00:00:29,000 --> 00:00:40,000
-Compare both replay branches.
+00:00:21,000 --> 00:00:25,000
+Matched replay: the two Couriers follow different evidence-driven routes.
 
 5
-00:00:40,000 --> 00:00:51,000
-Inspect the evidence behind each decision.
+00:00:25,000 --> 00:00:29,000
+The patched branch reaches the parcel through a different decision—not a forced action.
 
 6
-00:00:51,000 --> 00:01:00,000
-MIT licensed. Local Python. No API keys.
+00:00:29,000 --> 00:00:37,000
+Another copy is not another observation. The provenance-aware belief remains unchanged.
+
+7
+00:00:37,000 --> 00:00:45,000
+Protect the target from new information: no solution within the declared bounds.
+
+8
+00:00:45,000 --> 00:00:53,000
+A trained graph model may order candidates. Only exact execution verifies the result.
+
+9
+00:00:53,000 --> 00:01:00,000
+BeliefTown · MIT · Python + Jupyter · Source, notebooks, checkpoints, and benchmark results.
