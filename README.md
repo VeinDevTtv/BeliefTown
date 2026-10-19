@@ -8,13 +8,15 @@
 
 Inspect what a character knows, request a different next search destination, and find the smallest permitted delivery of existing evidence that produces it. Replay the consequences without changing the parcel’s physical history or forcing the character’s action.
 
-![The BeliefTown debugger](artifacts/browser/desktop.png)
+[![The BeliefTown debugger](artifacts/browser/desktop.png)](artifacts/browser/desktop.png)
 
 <details>
 <summary>View the mobile layout (390 × 844)</summary>
 
-<img src="artifacts/browser/mobile.png" width="390" alt="BeliefTown debugger in the monochrome mobile layout">
+<a href="artifacts/browser/mobile.png"><img src="artifacts/browser/mobile.png" width="390" alt="BeliefTown debugger in the monochrome mobile layout"></a>
 </details>
+
+Click either preview to open its full-resolution image.
 
 BeliefTown is a complete, local research implementation: a simulator, exact Bayesian belief engine, search-order planner, provenance-aware replay system, minimum-patch verifier, browser application, Jupyter notebooks, trained graph rankers, synthetic benchmark, and auditable results. The **core needs only Python and NumPy**. There is no LLM service, API key, or runtime network requirement.
 

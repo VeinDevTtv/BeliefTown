@@ -1,7 +1,0 @@
-test: 12/48 scenes evaluated
-test: 24/48 scenes evaluated
-test: 36/48 scenes evaluated
-test: 48/48 scenes evaluated
-ood: 12/24 scenes evaluated
-ood: 24/24 scenes evaluated
-COMPLETE 792 True

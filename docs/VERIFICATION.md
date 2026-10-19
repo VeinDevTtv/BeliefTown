@@ -12,7 +12,7 @@ These checks exposed default Windows text-encoding failures. File operations now
 
 ## UI preview refresh — 2026-10-19
 
-The README screenshots were recaptured at desktop and 390 × 844 mobile sizes from the local redesigned app. The standalone showcase, its offline browser copy, and the captioned walkthrough now use the monochrome interface. In the shared browser preview, the initial scene loaded, minimum-patch search returned a verified result, applying it changed the Courier's destination to Library, and replay advanced. This was a manual browser smoke check. The automated Playwright suite was not rerun because its configured Chromium executable was unavailable in this environment; the ten-check result below remains historical release evidence.
+The README screenshots were recaptured at desktop and 390 × 844 mobile sizes from the local redesigned app. Both PNGs link to their full-resolution images. The screenshots and walkthrough frames use neutral grayscale with light sharpening to preserve clean text when GitHub scales them. The standalone showcase, its offline browser copy, and the captioned walkthrough use the monochrome interface. In the shared browser preview, the initial scene loaded, minimum-patch search returned a verified result, applying it changed the Courier's destination to Library, and replay advanced. This was a manual browser smoke check. The automated Playwright suite was not rerun because its configured Chromium executable was unavailable in this environment; the ten-check result below remains historical release evidence.
 
 The Python test suite was rerun after the learning-code cleanup: **127 passed** on Windows with Python 3.13.1. One Jupyter/ZeroMQ compatibility warning was emitted; no test failed or was skipped.
 
