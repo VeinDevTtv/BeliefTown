@@ -1,0 +1,23 @@
+1
+00:00:00,000 --> 00:00:07,000
+Same world. Different evidence.
+
+2
+00:00:07,000 --> 00:00:18,000
+The exact solver verifies one minimum patch.
+
+3
+00:00:18,000 --> 00:00:29,000
+Mira's report changes the Courier's choice.
+
+4
+00:00:29,000 --> 00:00:40,000
+Compare both replay branches.
+
+5
+00:00:40,000 --> 00:00:51,000
+Inspect the evidence behind each decision.
+
+6
+00:00:51,000 --> 00:01:00,000
+MIT licensed. Local Python. No API keys.

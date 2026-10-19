@@ -80,7 +80,7 @@ Use the scene-format guide before manually editing likelihoods, transition matri
 
 ## Optional browser acceptance tests and launch media
 
-The release includes `artifacts/walkthrough/BeliefTown_Walkthrough.mp4`, a captioned, silent 60-second walkthrough assembled from actual UI states. It is a paced capture sequence, not a claim of continuous real-time performance. `artifacts/walkthrough/manifest.json` records its source frames and captions.
+The repository includes `artifacts/walkthrough/BeliefTown_Walkthrough.mp4`, a captioned, silent 60-second walkthrough of the current monochrome interface, assembled from actual UI states. It is a paced capture sequence, not a claim of continuous real-time performance. `artifacts/walkthrough/manifest.json` records its source frames and captions.
 
 To rerun browser checks, install the optional browser extra and Chromium:
 

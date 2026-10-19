@@ -34,7 +34,7 @@ function setState(value,{fresh=false}={}){
     $('mode').value=state.mode;
   }
   if(boot.offline){
-    $('connection').textContent='OFFLINE · RECORDED REPLAYS';
+    $('connection').textContent='OFFLINE \u00b7 RECORDED REPLAYS';
     for(const el of document.querySelectorAll('.live-only'))el.disabled=true;
     for(const id of ['mode','max-size','method','protect','target-actor','target-room'])$(id).disabled=true;
     $('find').textContent='Show verified featured patch';
@@ -48,19 +48,19 @@ function coords(n){
   return Array.from({length:n},(_,i)=>[184+118*Math.cos(-Math.PI/2+i*2*Math.PI/n),150+108*Math.sin(-Math.PI/2+i*2*Math.PI/n)]);
 }
 function mapSVG(f,branch){
-  const p=coords(f.rooms.length),active=actor(f),accent=branch?'#7de2ca':'#92b5ff';
-  let svg=`<svg viewBox="0 0 368 295" role="img" aria-label="${branch?'Intervention':'Original'} world at turn ${f.time}"><defs><pattern id="grid-${branch}" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".65" fill="#2a3544"/></pattern></defs><rect width="368" height="295" fill="url(#grid-${branch})"/>`;
-  for(const [u,v,cost] of f.edges){const [x,y]=p[u],[xx,yy]=p[v];svg+=`<line x1="${x}" y1="${y}" x2="${xx}" y2="${yy}" stroke="#3a475c" stroke-width="2"/><text x="${(x+xx)/2+5}" y="${(y+yy)/2-5}" font-size="9" fill="#8e9eb4">${cost}</text>`;}
+  const p=coords(f.rooms.length),active=actor(f),accent=branch?'#222222':'#858585';
+  let svg=`<svg viewBox="0 0 368 295" role="img" aria-label="${branch?'Intervention':'Original'} world at turn ${f.time}"><defs><pattern id="grid-${branch}" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".65" fill="#e6e6e4"/></pattern></defs><rect width="368" height="295" fill="url(#grid-${branch})"/>`;
+  for(const [u,v,cost] of f.edges){const [x,y]=p[u],[xx,yy]=p[v];svg+=`<line x1="${x}" y1="${y}" x2="${xx}" y2="${yy}" stroke="#c9c9c7" stroke-width="2"/><text x="${(x+xx)/2+5}" y="${(y+yy)/2-5}" font-size="9" fill="#686868">${cost}</text>`;}
   if(active.path.length>1){svg+=`<polyline points="${active.path.map(r=>p[r].join(',')).join(' ')}" fill="none" stroke="${accent}" stroke-width="3" stroke-dasharray="5 5" opacity=".7"/>`;}
   f.rooms.forEach((room,i)=>{
     const [x,y]=p[i],desired=active.destination===i,truth=f.truth===i;
-    svg+=`<rect x="${x-61}" y="${y-32}" width="122" height="64" rx="10" fill="${desired?'#1d303b':'#1b2330'}" stroke="${desired?accent:'#415067'}" stroke-width="${desired?1.7:1}"/>`;
-    svg+=`<text x="${x}" y="${y-10}" text-anchor="middle" fill="#e4edf8" font-size="11" font-family="system-ui">${esc(room)}</text>`;
-    if(truth)svg+=`<text x="${x+48}" y="${y-19}" text-anchor="middle" fill="#efcd86" font-size="15"><title>Actual parcel location: designer-only information</title>◎</text>`;
+    svg+=`<rect x="${x-61}" y="${y-32}" width="122" height="64" rx="8" fill="${desired?'#eeeeec':'#ffffff'}" stroke="${desired?accent:'#bcbcb9'}" stroke-width="${desired?1.7:1}"/>`;
+    svg+=`<text x="${x}" y="${y-10}" text-anchor="middle" fill="#242424" font-size="11" font-family="system-ui">${esc(room)}</text>`;
+    if(truth)svg+=`<text x="${x+48}" y="${y-19}" text-anchor="middle" fill="#777777" font-size="15"><title>Actual parcel location: designer-only information</title>\u25ce</text>`;
     const here=f.actors.filter(a=>a.room===i);
-    here.forEach((a,k)=>{const xx=x+(k-(here.length-1)/2)*25;const col=['#92b5ff','#c8b7f1','#efcd86'][f.actors.findIndex(b=>b.id===a.id)%3];svg+=`<circle cx="${xx}" cy="${y+13}" r="10" fill="#26384c" stroke="${col}"/><text x="${xx}" y="${y+17}" text-anchor="middle" font-size="9" font-family="system-ui" fill="${col}"><title>${esc(a.name)}${a.found?' · parcel found':''}</title>${esc(a.name[0])}</text>`;});
+    here.forEach((a,k)=>{const xx=x+(k-(here.length-1)/2)*25;const col=['#222222','#666666','#999999'][f.actors.findIndex(b=>b.id===a.id)%3];svg+=`<circle cx="${xx}" cy="${y+13}" r="10" fill="#ffffff" stroke="${col}"/><text x="${xx}" y="${y+17}" text-anchor="middle" font-size="9" font-family="system-ui" fill="${col}"><title>${esc(a.name)}${a.found?' \u00b7 parcel found':''}</title>${esc(a.name[0])}</text>`;});
   });
-  svg+=`<text x="184" y="286" text-anchor="middle" font-size="9" fill="#93a4b9" font-family="system-ui">${esc(active.name)} → ${esc(f.rooms[active.destination])}${active.found?' · parcel found':''}</text></svg>`;
+  svg+=`<text x="184" y="286" text-anchor="middle" font-size="9" fill="#686868" font-family="system-ui">${esc(active.name)} \u2192 ${esc(f.rooms[active.destination])}${active.found?' \u00b7 parcel found':''}</text></svg>`;
   return svg;
 }
 function renderActors(f){
@@ -72,18 +72,18 @@ function renderEvidence(f,a){
   $('evidence-count').textContent=`${a.receipts.length} receipts / ${roots.length} independent roots`;
   $('evidence-table').innerHTML=roots.map(root=>{
     const receipts=a.receipts.filter(x=>x.root_id===root.id),name=state.scene.actors.find(x=>x.id===root.observer)?.name||root.observer;
-    const report=root.likelihood?`Likelihood [${root.likelihood.join(', ')}]`:`${f.rooms[root.reported_room]} · q=${root.reliability.toFixed(2)}`;
+    const report=root.likelihood?`Likelihood [${root.likelihood.join(', ')}]`:`${f.rooms[root.reported_room]} \u00b7 q=${root.reliability.toFixed(2)}`;
     return `<tr><td>${esc(root.id)}</td><td>${esc(name)}</td><td>t=${root.time}</td><td>${receipts.map(r=>`t=${r.received_at}`).join(', ')}</td><td>${esc(report)}</td></tr>`;
   }).join('')||'<tr><td colspan="5">No observations received at this turn.</td></tr>';
   const allReceipts=a.receipts.slice(-14),height=Math.max(180,allReceipts.length*30+35),ys=new Map();
   allReceipts.forEach((r,i)=>{if(!ys.has(r.root_id))ys.set(r.root_id,[]);ys.get(r.root_id).push(25+i*30);});
   let svg=`<svg viewBox="0 0 650 ${height}" style="height:${height}px" role="img" aria-label="Observation roots and repeated receipts for ${esc(a.name)}">`;
   for(const [root,values] of ys){const y=values.reduce((x,v)=>x+v,0)/values.length;
-    values.forEach(v=>{svg+=`<path d="M200 ${y} C245 ${y} 260 ${v} 305 ${v}" fill="none" stroke="#52697f" stroke-width="1.5"/><path d="M450 ${v} C500 ${v} 510 ${height/2} 555 ${height/2}" fill="none" stroke="#385b59"/>`;});
-    svg+=`<rect x="15" y="${y-12}" width="185" height="24" rx="6" fill="#253246" stroke="#50627b"/><text x="107" y="${y+4}" text-anchor="middle" fill="#d9e6fa" font-size="9"><title>${esc(root)}</title>${esc(root.length>25?root.slice(0,24)+'…':root)}</text>`;
+    values.forEach(v=>{svg+=`<path d="M200 ${y} C245 ${y} 260 ${v} 305 ${v}" fill="none" stroke="#888888" stroke-width="1.5"/><path d="M450 ${v} C500 ${v} 510 ${height/2} 555 ${height/2}" fill="none" stroke="#b0b0ad"/>`;});
+    svg+=`<rect x="15" y="${y-12}" width="185" height="24" rx="5" fill="#eeeeec" stroke="#bcbcb9"/><text x="107" y="${y+4}" text-anchor="middle" fill="#333333" font-size="9"><title>${esc(root)}</title>${esc(root.length>25?root.slice(0,24)+'\u2026':root)}</text>`;
   }
-  allReceipts.forEach((r,i)=>{const y=25+i*30,msg=f.messages.find(m=>m.id===r.message_id);svg+=`<rect x="305" y="${y-10}" width="145" height="21" rx="5" fill="#1e3436" stroke="#466362"/><text x="377" y="${y+4}" text-anchor="middle" fill="#b8e5d9" font-size="9"><title>${esc(msg?`${msg.id}; parent: ${msg.parent_id||'original observation'}`:'Direct observation')}</title>${r.message_id?'Delivery':'Observed'} at t=${r.received_at}</text>`;});
-  svg+=`<circle cx="592" cy="${height/2}" r="32" fill="#284139" stroke="#7de2ca"/><text x="592" y="${height/2+4}" text-anchor="middle" font-size="10" fill="#d9faee">${esc(a.name)}</text></svg>`;
+  allReceipts.forEach((r,i)=>{const y=25+i*30,msg=f.messages.find(m=>m.id===r.message_id);svg+=`<rect x="305" y="${y-10}" width="145" height="21" rx="5" fill="#ffffff" stroke="#bcbcb9"/><text x="377" y="${y+4}" text-anchor="middle" fill="#444444" font-size="9"><title>${esc(msg?`${msg.id}; parent: ${msg.parent_id||'original observation'}`:'Direct observation')}</title>${r.message_id?'Delivery':'Observed'} at t=${r.received_at}</text>`;});
+  svg+=`<circle cx="592" cy="${height/2}" r="32" fill="#eeeeec" stroke="#777777"/><text x="592" y="${height/2+4}" text-anchor="middle" font-size="10" fill="#222222">${esc(a.name)}</text></svg>`;
   $('provenance').innerHTML=svg;
 }
 function renderManual(f){
@@ -94,9 +94,9 @@ function renderManual(f){
 function renderSolution(){
   if(!lastSearch){$('solution').innerHTML='<span class="muted">No search has been run at this checkpoint.</span>';$('apply').disabled=true;$('audit').disabled=true;return;}
   const r=lastSearch.record,patch=r.patch;
-  const labels={verified_minimum_within_bounds:'Verified minimum · within bounds',verified_feasible:'Verified feasible · minimum unresolved',no_solution_within_bounds:'No solution within these bounds',budget_exhausted:'Budget exhausted · unresolved'};
+  const labels={verified_minimum_within_bounds:'Verified minimum \u00b7 within bounds',verified_feasible:'Verified feasible \u00b7 minimum unresolved',no_solution_within_bounds:'No solution within these bounds',budget_exhausted:'Budget exhausted \u00b7 unresolved'};
   let text=`<strong>${esc(labels[r.status]||r.status)}</strong>`;
-  if(patch!==null){text+=patch.length?`${patch.length} permitted ${patch.length===1?'delivery':'deliveries'} changes the next search.`:'The requested action is already selected. No delivery needed.';text+=patch.map(d=>`<div class="patch-item"><b>${esc(d.sender)} → ${esc(d.recipient)}</b><br>${esc(d.root_id)}</div>`).join('');}
+  if(patch!==null){text+=patch.length?`${patch.length} permitted ${patch.length===1?'delivery':'deliveries'} changes the next search.`:'The requested action is already selected. No delivery needed.';text+=patch.map(d=>`<div class="patch-item"><b>${esc(d.sender)} \u2192 ${esc(d.recipient)}</b><br>${esc(d.root_id)}</div>`).join('');}
   else text+='<span class="muted">No executable patch has been returned.</span>';
   text+=`<div class="stats"><span><b>${r.verifier_calls}</b>verifier calls</span><span><b>${(r.elapsed_seconds*1000).toFixed(1)}</b>milliseconds</span><span><b>${r.candidate_space_size}</b>bounded subsets</span></div>`;
   $('solution').innerHTML=text;$('apply').disabled=patch===null||state.patched_times.includes(lastSearch.bundle.time);$('audit').disabled=false;
@@ -106,17 +106,17 @@ function render(){
   const f=frame(),base=frame(false),a=actor(f),original=actor(base,a.id);
   $('tick-label').textContent=`TURN ${tick}`;$('time-value').textContent=`${tick} / ${state.scene.horizon}`;$('timeline').value=tick;
   $('map-before').innerHTML=mapSVG(base,false);$('map-after').innerHTML=mapSVG(f,true);renderActors(f);
-  $('inspector-title').textContent=`${a.name}’s next search`;$('entropy-label').textContent=`H = ${a.entropy.toFixed(3)} NATS`;
+  $('inspector-title').textContent=`${a.name}\u2019s next search`;$('entropy-label').textContent=`H = ${a.entropy.toFixed(3)} NATS`;
   $('belief-bars').innerHTML=f.rooms.map((name,i)=>`<div class="belief-row"><div class="belief-line"><span>${esc(name)}</span><span class="mono">${(a.belief[i]*100).toFixed(1)}%</span></div><div class="belief-track"><div class="belief-fill" style="width:${a.belief[i]*100}%"></div><span class="belief-original" style="left:${Math.min(99.5,original.belief[i]*100)}%"></span></div></div>`).join('');
-  $('routes').innerHTML=a.alternatives.slice(0,4).map(r=>`<div class="route"><span class="route-name">${r.order.map(i=>esc(f.rooms[i])).join(' → ')}</span><span class="route-cost">${r.cost.toFixed(2)}</span></div>`).join('');
+  $('routes').innerHTML=a.alternatives.slice(0,4).map(r=>`<div class="route"><span class="route-name">${r.order.map(i=>esc(f.rooms[i])).join(' \u2192 ')}</span><span class="route-cost">${r.cost.toFixed(2)}</span></div>`).join('');
   renderEvidence(f,a);renderManual(f);renderSolution();
-  $('events').innerHTML=f.events.slice(-70).map(e=>`<div class="event-row"><span class="event-time">t=${e.time}</span><span class="event-kind">${esc(pretty(e.type))}</span><span class="event-details">${esc(e.id||e.actor||'')}${e.sender?' · '+esc(e.sender)+' → '+esc(e.recipient):''}${e.type==='move'?' · '+esc(f.rooms[e.from])+' → '+esc(f.rooms[e.to]):''}${e.type==='inspection'?' · '+(e.found?'parcel found':'room empty'):''}</span></div>`).join('')||'<p class="muted">No events yet.</p>';
+  $('events').innerHTML=f.events.slice(-70).map(e=>`<div class="event-row"><span class="event-time">t=${e.time}</span><span class="event-kind">${esc(pretty(e.type))}</span><span class="event-details">${esc(e.id||e.actor||'')}${e.sender?' \u00b7 '+esc(e.sender)+' \u2192 '+esc(e.recipient):''}${e.type==='move'?' \u00b7 '+esc(f.rooms[e.from])+' \u2192 '+esc(f.rooms[e.to]):''}${e.type==='inspection'?' \u00b7 '+(e.found?'parcel found':'room empty'):''}</span></div>`).join('')||'<p class="muted">No events yet.</p>';
 }
 function download(name,data){const blob=new Blob([typeof data==='string'?data:JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
-function pause(){if(timer)clearInterval(timer);timer=null;$('play').textContent='▶';}
+function pause(){if(timer)clearInterval(timer);timer=null;$('play').textContent='\u25b6';}
 $('timeline').oninput=()=>{pause();tick=Number($('timeline').value);render();};
 $('step').onclick=()=>{pause();tick=Math.min(tick+1,state.scene.horizon);render();};
-$('play').onclick=()=>{if(timer){pause();return;}if(tick>=state.scene.horizon)tick=state.scene.search_start;$('play').textContent='Ⅱ';timer=setInterval(()=>{if(tick>=state.scene.horizon){pause();return;}tick++;render();},650);};
+$('play').onclick=()=>{if(timer){pause();return;}if(tick>=state.scene.horizon)tick=state.scene.search_start;$('play').textContent='\u2161';timer=setInterval(()=>{if(tick>=state.scene.horizon){pause();return;}tick++;render();},650);};
 $('scenario').onchange=()=>perform(async()=>{pause();lastSearch=null;if(boot.offline){offlineFamily=$('scenario').value;setState(clone(boot.scenes[offlineFamily].state),{fresh:true});}else setState(await api('scene',{family:$('scenario').value}),{fresh:true});notice('');});
 $('generate').onclick=()=>perform(async()=>{pause();setState(await api('scene',{family:$('scenario').value,seed:Number($('seed').value)}),{fresh:true});notice('A deterministic procedural scene was generated. Its seed is recorded in the exported JSON.');});
 $('reset').onclick=()=>perform(async()=>{pause();lastSearch=null;if(boot.offline)setState(clone(boot.scenes[offlineFamily].state),{fresh:true});else setState(await api('reset'),{fresh:true});notice('Branch reset. The original scene has not been changed.');});

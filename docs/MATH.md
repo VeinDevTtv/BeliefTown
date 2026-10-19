@@ -1,10 +1,10 @@
 # Mathematical specification
 
-This document describes the implementation in this release. It distinguishes assumptions, exact finite-model calculations, learned heuristics, and the scope of a verification claim. The components are established mathematical tools; their integration is not presented as a new theorem.
+This specification follows the implementation in this release. It separates model assumptions, exact finite-model calculations, learned search ordering, and the limits of a verification claim. Bayesian filtering, route enumeration, graph networks, and subset search are established tools; this project does not present their integration as a new theorem.
 
 ## 1. State and information boundaries
 
-The parcel location at logical turn \(t\) is \(X_t\in\{0,\ldots,L-1\}\). The simulator stores its actual trajectory. A character does not receive that trajectory. Its public policy interface, `AgentView`, contains its current room, prior, known transition model, received evidence, graph of room connections, and inspection cost.
+The parcel location at logical turn \(t\) is \(X_t\in\{0,\ldots,L-1\}\). The simulator stores the actual trajectory, but a character does not receive it. The character's policy interface, `AgentView`, contains its current room, prior, known transition model, received evidence, room-connection graph, and inspection cost.
 
 For actor \(i\), the belief is
 
@@ -19,7 +19,7 @@ where \(H_t^i\) is the available evidence history. The probability simplex is
 \Delta^{L-1}=\{\mathbf b\in\mathbb R^L:b(x)\ge0,\;\sum_xb(x)=1\}.
 \]
 
-The designer’s inspector is deliberately privileged: it can display actual parcel location and different characters’ private evidence. The inspector is **not** the policy’s input. Tests modify hidden state while preserving an `AgentView` and require the decision to remain unchanged.
+The designer's inspector is privileged: it can display the parcel's actual location and each character's private evidence. It is **not** an input to the character's policy. A hidden-state invariance check changes the unseen world while holding `AgentView` fixed and confirms that the decision is unchanged.
 
 The world supports 2–7 rooms; the canonical demonstration uses four rooms and three actors. The parcel can move during setup, then remains stationary during the search phase. Actors may move and inspect rooms. A found parcel is not removed, so other actors can independently locate it; a successful actor then becomes idle.
 
@@ -39,7 +39,7 @@ q_r,&x=y,\\
 
 The implementation allows per-observation reliability: observations from the same actor need not have identical sensor quality. This is neither inferred honesty nor a model of human psychology.
 
-For exact room inspection, the likelihood is an indicator. An empty inspection of room \(j\) has \(\ell(x)=\mathbb1[x\ne j]\); finding the parcel has \(\ell(x)=\mathbb1[x=j]\). Likelihood vectors are checked for finite values in \([0,1]\). Declared scenes cannot contain an observation that has zero likelihood under their physical history and declared sensor model.
+For an exact room inspection, the likelihood is an indicator. An empty inspection of room \(j\) has \(\ell(x)=\mathbb{1}[x\ne j]\); finding the parcel has \(\ell(x)=\mathbb{1}[x=j]\). Likelihood vectors are checked for finite values in \([0,1]\). A declared scene cannot contain an observation with zero likelihood under its physical history and sensor model.
 
 A character conditions on the **set of received root IDs**, not the count of transmissions:
 
@@ -106,7 +106,7 @@ where \(\operatorname{LSE}\) is log-sum-exp. Update adds log likelihoods and sub
 
 This avoids multiplying many tiny probabilities or permanently rounding a possible state to zero during a sequence of conflicting observations. The returned probability vector is float64; extremely small output coordinates can still be below floating-point representability, but internal recomputation retains log support. Truly inconsistent evidence raises `InconsistentEvidence`; it is not silently ignored or replaced with a uniform belief.
 
-The straightforward runtime cost is \(O(tL^2+|\mathcal R_t^i|L)\), small for this release. Tests compare it with an independently written enumeration over all \(L^{t+1}\) latent trajectories on small instances.
+The straightforward runtime cost is \(O(tL^2+|\mathcal R_t^i|L)\), which is small for the released scenes. An independent reference implementation checks small cases by enumerating all \(L^{t+1}\) latent trajectories.
 
 ## 4. Search decisions as linear objectives
 
@@ -218,13 +218,19 @@ W_{self}^{(\ell)}h_v^{(\ell)}+
 
 Implementation row-vector conventions are algebraically equivalent. Padding is masked. The mean graph embedding, target actor embedding, destination embedding, and global features are concatenated into an MLP, producing logit \(s_\theta\).
 
-The label is
+For scene snapshot \(S\), target actor \(i\), desired room \(a^*\), and candidate patch \(\Delta\), the binary label is
 
 \[
-y=\mathbb1[\text{exact execution satisfies target action and constraints}].
+y(S,i,a^*,\Delta)=\mathbb{1}[\text{exact execution satisfies the requested action and constraints}].
 \]
 
-All successful alternatives are positive labels, not just one chosen solution. With \(\hat p=\operatorname{sigmoid}(s_\theta)\), training minimizes binary cross-entropy. AdamW uses learning rate 0.002, weight decay \(10^{-4}\), batch size 64, and gradient-norm clipping at 5. The release trains 14 epochs and selects the checkpoint with lowest validation BCE for each seed.
+All successful alternatives are positive labels, not just one selected solution. If the model outputs logit \(s_\theta(S,i,a^*,\Delta)\), its sigmoid is \(\hat p=\sigma(s_\theta)\). For \(N\) labeled patches, training minimizes binary cross-entropy:
+
+\[
+\mathcal L(\theta)=-\frac{1}{N}\sum_{n=1}^{N}\left[y_n\log\hat p_n+(1-y_n)\log(1-\hat p_n)\right].
+\]
+
+The implementation evaluates this loss directly from logits for numerical stability. AdamW uses learning rate \(0.002\), weight decay \(10^{-4}\), batch size 64, and gradient-norm clipping at 5. Each release run trains for 14 epochs and selects the checkpoint with the lowest validation BCE. The sigmoid output is used to train the ranker; no probability-calibration claim is made.
 
 The graph model has 52,961 parameters. A 5,633-parameter MLP receives global and pooled node features without edges. The `graph_no_provenance` ablation removes root-to-message and forwarding relations, direct known-root indicators, and related scalar shortcut features. It is a bundled ablation, not an isolated causal estimate of a single graph edge type.
 
@@ -236,15 +242,15 @@ Diagnostic interventions suppress an original observation or a transmission and 
 
 World generation uses keyed random streams: a hash of seed and semantic event key initializes a local generator. Forks preserve recorded exogenous physical events and measurements while recomputing endogenous search actions and inspections. They do not depend on a shared random stream’s branch-dependent draw count.
 
-These are counterfactuals in the declared finite simulator—not explanations of human cognition or an unrelated model’s hidden reasoning.
+These counterfactuals are defined by the finite simulator. They do not explain human cognition or reveal the hidden reasoning of an unrelated model.
 
 ## 9. Evaluation
 
-For true room \(X_n\), use the multiclass Brier score
+For case \(n\), let \(b_n(x)\) be the belief assigned to room \(x\), and let \(X_n\) be the true room. The multiclass Brier score is
 
 \[
-\mathrm{BS}=\frac1M\sum_n\sum_x
-(b_n(x)-\mathbb1[X_n=x])^2.
+\mathrm{BS}=\frac{1}{M}\sum_{n=1}^{M}\sum_x
+\left(b_n(x)-\mathbb{1}[X_n=x]\right)^2.
 \]
 
 For a feasible patch with reference optimum, report \(|\Delta|-|\Delta^*|\). Report verifier calls and full search latency separately. Neural graph construction and inference count toward latency. Model loading and scene construction are amortized setup costs and excluded from steady-state timing.

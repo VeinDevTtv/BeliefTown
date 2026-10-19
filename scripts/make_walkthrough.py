@@ -36,7 +36,7 @@ with sync_playwright() as p:
     html=html.replace('<script src="/app.js"></script>','<script>'+shim+static.joinpath('app.js').read_text(encoding="utf-8")+'</script>')
     page.set_content(html);page.wait_for_selector('.actor-card')
     page.evaluate('''() => {const b=document.createElement('div'); b.id='walkthrough-caption';
-    b.style.cssText='position:fixed;left:28px;right:28px;bottom:22px;z-index:999;background:#111820f5;border:1px solid #80e0c5;border-radius:14px;padding:18px 25px;color:#ecf6f5;font:600 24px/1.35 system-ui;box-shadow:0 8px 36px #0008';document.body.appendChild(b);}''')
+    b.style.cssText='position:fixed;left:28px;right:28px;bottom:22px;z-index:999;background:#171717f5;border:1px solid #777;border-radius:10px;padding:18px 25px;color:#fff;font:600 24px/1.35 system-ui;box-shadow:0 8px 36px #0008;pointer-events:none';document.body.appendChild(b);}''')
     def shot(name,caption,duration,y=400):
         page.evaluate('([text,y])=>{document.querySelector("#walkthrough-caption").textContent=text;window.scrollTo(0,y)}',[caption,y])
         page.wait_for_timeout(120)
@@ -52,6 +52,7 @@ with sync_playwright() as p:
     page.locator('#step').click();shot('04_replay_step','Matched replay: the two Couriers follow different evidence-driven routes.',4,400)
     page.locator('#step').click();shot('05_replay_result','The patched branch reaches the parcel through a different decision—not a forced action.',4,400)
     page.locator('#reset').click();page.wait_for_function("document.querySelector('#notice').textContent.includes('Branch reset')")
+    page.locator('.advanced-tools').evaluate('(element)=>{element.open=true}')
     page.locator('#manual-root').select_option('old-workshop');page.locator('#deliver').click()
     page.wait_for_function("document.querySelector('#notice').textContent.includes('did not change')")
     shot('06_duplicate','Another copy is not another observation. The provenance-aware belief remains unchanged.',8,1290)
@@ -62,7 +63,7 @@ with sync_playwright() as p:
     page.locator('#protect').uncheck();page.locator('#method').select_option('graph');page.locator('#find').click()
     page.wait_for_function("document.querySelector('#solution').textContent.includes('Verified minimum')")
     shot('08_graph_ranker','A trained graph model may order candidates. Only exact execution verifies the result.',8,400)
-    shot('09_open_source','BeliefTown · MIT · Python + Jupyter · Source, tests, checkpoints, and honest benchmark results.',7,400)
+    shot('09_open_source','BeliefTown \u00b7 MIT \u00b7 Python + Jupyter \u00b7 Source, tests, checkpoints, and honest benchmark results.',7,400)
     browser.close()
 assert sum(x['duration_seconds'] for x in frames)==60
 assert not errors,errors

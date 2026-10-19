@@ -26,5 +26,8 @@ def export_showcase(path: str|Path) -> Path:
     html=html.replace('<link rel="stylesheet" href="/styles.css">','<style>'+static.joinpath('styles.css').read_text(encoding="utf-8")+'</style>')
     html=html.replace('__BOOTSTRAP__',json.dumps(boot,separators=(',',':'),allow_nan=False).replace('<','\\u003c'))
     html=html.replace('<script src="/app.js"></script>','<script>'+static.joinpath('app.js').read_text(encoding="utf-8")+'</script>')
-    out=Path(path);out.parent.mkdir(parents=True,exist_ok=True);out.write_text(html, encoding="utf-8")
+    out=Path(path)
+    out.parent.mkdir(parents=True,exist_ok=True)
+    with out.open("w", encoding="utf-8", newline="\n") as destination:
+        destination.write(html)
     return out

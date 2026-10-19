@@ -1,51 +1,117 @@
-# Model card: candidate-patch rankers, release 1.0.0
+# Model card: information-patch rankers
 
-## Purpose and limits
+This card describes the three candidate rankers released with BeliefTown 1.0.0.
+It summarizes what they learn, how they were evaluated, and where their results
+should not be applied.
 
-The models estimate which candidate evidence-delivery patches are likely to produce a specified NPC search action. They are **search-ordering assistants**, not language models, character personalities, autonomous game designers, or certificates. The exact simulator and verifier determine feasibility and minimum cardinality.
+## Intended use
 
-Use these checkpoints only with the accompanying feature encoder and schema. The appropriate deployment is the bounded local research debugger. No performance claim is made for arbitrary commercial games, natural-language messages, real human trust, or large multi-object worlds.
+Each model scores a proposed delivery of existing evidence. The score helps the
+exact search procedure decide which candidate patches to check first. The
+models are not language models, NPC personalities, or autonomous designers.
+They do not determine whether a patch is legal, whether it achieves the
+requested action, or whether it is minimum. Those claims come from simulator
+execution and bounded exhaustive verification.
 
-## Released models
+The checkpoints are intended for the local research debugger and the bundled
+finite scene format. They have not been evaluated on commercial games, natural
+language, human trust, or large worlds with multiple interacting objects.
+
+## Model variants
 
 | Variant | Architecture | Parameters | Seeds |
 |---|---|---:|---|
-| `graph` | Two relational message-passing layers, hidden size 32, mean pooling, target/destination embeddings, global features | 52,961 | 0, 1, 2 |
-| `mlp` | Globals plus per-feature node means/maxima; dense hidden layers 64 and 32; no edges | 5,633 | 0, 1, 2 |
-| `graph_no_provenance` | Same graph network, selected provenance edges and direct duplication features removed | 52,961 | 0, 1, 2 |
+| `graph` | Two relational message-passing layers, hidden size 32, mean pooling, target and destination embeddings, and global features | 52,961 | 0, 1, 2 |
+| `mlp` | Dense layers of width 64 and 32 using global features and pooled node features; no graph edges | 5,633 | 0, 1, 2 |
+| `graph_no_provenance` | Same graph architecture, with selected provenance relations and related duplicate indicators removed | 52,961 | 0, 1, 2 |
 
-Graphs have 20-dimensional node features, 14 global features, and 21 directed relation types. Node types are rooms, actors, root observations, received messages, and proposed deliveries. The score head combines pooled graph information with the target actor and requested-room embeddings. IDs are used to establish relations, not provided as learned numeric features. Hidden parcel truth is not encoded.
+The graph encoder uses 20 features per node, 14 graph-level features, and 21
+directed relation types. Nodes represent rooms, actors, original observations,
+received messages, and proposed deliveries. The score head combines a pooled
+graph representation with embeddings for the target actor and requested room.
+Identifiers establish relationships but are not numeric model inputs. The
+parcel's hidden location is never encoded.
 
-A strong scalar likelihood heuristic is included in the full graph and MLP inputs. Therefore any gain must be demonstrated over that heuristic; this is not a comparison of “reasoning from nothing” against a weak baseline. The provenance-removal variant also removes selected related global signals, so it is a bundled ablation, not a pure single-edge intervention.
+The full graph and MLP models include a likelihood-based heuristic feature.
+Their performance must therefore be compared with that strong baseline. The
+provenance ablation removes a group of connected features, so it cannot isolate
+the causal effect of one relation or feature.
 
 ## Training
 
-Training uses 7,104 candidate patches from 120 scenes; validation uses 1,372 patches from 24 completely separate scenes. Every patch up to the configured cardinality is labeled by actual execution. All feasible alternatives are positive; the target is not a single arbitrarily chosen demonstration.
+The training split contains 7,104 candidate patches from 120 scenes. The
+validation split contains 1,372 patches from 24 different scenes. For a scene
+and proposed patch \(\Delta\), the target is
 
-Each of the nine release runs used 14 epochs, batch size 64, AdamW at learning rate 0.002, weight decay 0.0001, binary cross-entropy with logits, and gradient clipping at norm 5. There is no test-driven model selection. The saved epoch minimizes validation BCE. Full epoch curves and metadata are in the JSON adjacent to each checkpoint.
+\[
+y(\Delta)=\mathbb{1}[\text{exact execution meets the requested action and constraints}].
+\]
 
-The implementation seeds Python, NumPy, and PyTorch, uses one CPU thread for neural work, and enables deterministic algorithms. Bitwise reproducibility across different PyTorch versions, platforms, and hardware is not promised. Checkpoint and dataset hashes identify the delivered experiment.
+Every feasible patch is labeled positive; the data does not nominate one
+arbitrary successful patch as the sole target. A candidate's label comes from
+simulator execution, not from a model prediction.
 
-The application chooses among bundled checkpoints by validation loss only. The benchmark reports each of all three seeds; it does not report only the selected application's checkpoint. The separate three-epoch notebook exercise is not used to produce release benchmark rows.
+Each of the nine release runs used 14 epochs, batches of 64, AdamW with learning
+rate \(0.002\) and weight decay \(10^{-4}\), binary cross-entropy with logits,
+and gradient clipping at norm 5. The selected checkpoint is the epoch with the
+lowest validation loss. Test and out-of-distribution scenes do not take part in
+checkpoint selection. Per-epoch metrics and run metadata accompany each
+checkpoint.
 
-## Evaluation and actual finding
+Training seeds Python, NumPy, and PyTorch, uses one CPU thread, and enables
+deterministic algorithms. This does not guarantee bit-for-bit identical results
+across different PyTorch versions, platforms, or processors. Dataset and
+checkpoint hashes identify the released files.
 
-The released test set contains 48 scenes; a further 24 scenes form a bundled distribution shift with larger room graphs and changed generation conditions. All candidate variants from one scene stay together. The statistical unit is a scene, with trained seeds averaged within scene before bootstrap intervals.
+The application selects a bundled checkpoint using validation loss. The
+benchmark reports all three seeds for each model type rather than only the
+checkpoint selected by the application. The three-epoch notebook exercise is
+an integration example; it did not produce the release results.
 
-**The graph ranker did not demonstrate a runtime advantage over the heuristic.** Neural scoring overhead exceeds the small changes in verifier-call count at this scale. Heuristic ordering remains the default. See `artifacts/evaluation/RESULTS.md`, its JSON confidence intervals, and raw scene rows rather than quoting rounded numbers from this card.
+## Evaluation and findings
 
-All 792 evaluated search executions agreed with exhaustive candidate labels on feasibility/minimality. This tests the correctness architecture on those cases; it does not mean that the learned classifier is 100% accurate. A classifier error changes ordering, not the definition of a valid patch.
+The held-out test set contains 48 scenes. Another 24 scenes form a bundled
+distribution shift: they use larger room graphs and different generation
+settings. Every variant from one scene stays in the same split. Statistical
+intervals use scenes as the independent unit, averaging the three trained
+seeds within each scene before bootstrapping.
 
-Most benchmark goals are infeasible within bounds, which limits how much ranking can improve certification work. No ranker can certify a no-solution layer without exhausting it under this algorithm. Fixed-call-budget success and total wall-clock latency answer different questions.
+The graph ranker did not show a runtime advantage over the heuristic on the
+released benchmark. At this scale, graph construction and scoring cost more
+than the modest changes in verifier calls. The heuristic therefore remains the
+default. See [`artifacts/evaluation/RESULTS.md`](../artifacts/evaluation/RESULTS.md)
+for measurements, confidence intervals, and raw scene-level results.
 
-## Failure modes
+All 792 evaluated searches agreed with exhaustive feasibility and minimum-size
+labels. This is evidence about the verifier on those cases; it is not a claim
+that the learned classifier is always correct. Ranking errors can change search
+efficiency, but cannot change the verifier's decision.
 
-The learned score can be poorly calibrated, rank a useful message late, generalize poorly to a novel evidence graph, or add more overhead than it saves. The graph sees all designer-available roots, not only the target NPC's current evidence, because its task is choosing deliveries. That privilege must not be misrepresented as the NPC's own information access.
+Many benchmark goals have no solution within the configured bounds. Under the
+released search procedure, certifying that outcome requires checking every
+candidate in the bounded space. Candidate ordering cannot avoid that work.
+Verifier-call counts and wall-clock latency are therefore separate measures.
 
-Duplicate handling is exact only for supplied provenance identities. The model does not discover unknown common sources, detect human deception, infer omitted channels, or resolve statistical dependency between separately identified roots.
+## Known limitations
 
-## Files, license, and safe use
+The scores may be poorly calibrated, put a useful patch late in the search, or
+generalize poorly to unfamiliar evidence graphs. Encoding and inference may
+cost more than they save. The graph ranker can see evidence roots held by any
+actor because its task is to help the designer choose a delivery. This access
+is not part of the NPC's private information.
 
-Checkpoints and histories are in `artifacts/checkpoints/`. They were trained from scratch on this project's synthetic scenes; no third-party pretrained model or human dataset is included. The original checkpoints use the repository's MIT license. PyTorch retains its separate license.
+Provenance handling relies on identifiers supplied by the scene. The models do
+not discover hidden common sources, detect deception, infer missing channels,
+or estimate dependence between separately identified roots.
 
-`Predictor.load()` uses tensor-oriented `weights_only=True` loading. Load trusted files with matching software/schema, keep models local, and retain exact verification after ranking. Removing verification or adding neural pruning changes the guarantees.
+## Files and use
+
+The checkpoints and histories are in `artifacts/checkpoints/`. They were
+trained from scratch on synthetic scenes created by this project; no pretrained
+third-party model or human dataset is included. The project code and original
+checkpoints use the MIT license. PyTorch has its own license.
+
+`Predictor.load()` uses PyTorch's `weights_only=True` option. Use a checkpoint
+with the matching feature encoder and schema, and retain exact verification
+after ranking. Pruning candidates based on the learned score would change the
+search guarantees.

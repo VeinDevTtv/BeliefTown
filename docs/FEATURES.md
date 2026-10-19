@@ -26,6 +26,8 @@ This table maps the agreed bounded first release to implementation and evidence.
 | Reproducible package and command-line workflow | `pyproject.toml`, CLI, scripts | Editable install, single-command quick pipeline, wheel smoke test |
 | Open-source licensing, contribution and publication material | Root documentation and `docs/` | Final release link/integrity checks |
 
+The feature descriptions still refer to the 1.0.0 release behavior. The screenshots, standalone showcase, and walkthrough now show the monochrome redesign. A browser smoke walkthrough confirmed the initial scene, minimum-patch search, patch application, replay step, and mobile layout; the complete automated browser suite has not been rerun for this visual update.
+
 ## Deliberately outside this release
 
 The design narrowed to a finite debugger, not an unbounded town. Online source-trust learning, strategic message selection, free-form dialogue, nested theory of mind, moving targets during search, multiple interacting parcel variables, voice/3D art, commercial-engine plugins, and public multi-user deployment were excluded from version one. They are not placeholders in the code or hidden prerequisites for the delivered workflow.

@@ -54,6 +54,7 @@ with StudioServer(Studio(checkpoint_dir=root/'artifacts/checkpoints')) as server
     assert 'Library' in page.locator('.actor-card').first.inner_text();checks.append('apply changes destination')
     page.locator('#step').click();assert page.locator('#tick-label').inner_text()=='TURN 5';checks.append('step replay')
     page.locator('#reset').click();page.wait_for_function("document.querySelector('#notice').textContent.includes('Branch reset')")
+    page.locator('.advanced-tools > summary').click()
     page.locator('#manual-root').select_option('old-workshop');page.locator('#deliver').click()
     page.wait_for_function("document.querySelector('#notice').textContent.includes('did not change')")
     checks.append('duplicate delivery leaves belief unchanged')

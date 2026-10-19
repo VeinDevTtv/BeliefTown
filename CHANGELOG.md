@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Redesign the studio with a monochrome palette, simpler hierarchy, and collapsible evidence and diagnostic panels; refresh the recorded HTML showcase and browser screenshots.
+- Rework the graph encoder, rankers, data generation, training, and benchmark modules for readability while preserving the released feature layout and checkpoint schema.
+- Rewrite the model and data cards, clarify the mathematical specification, and link the technical research docs from the README.
+- Refresh the captioned walkthrough, frame captures, desktop/mobile screenshots, standalone showcase, and offline preview to match the monochrome interface.
+
 ## GitHub publication — 2026-10-19
 
 - Publish the MIT-licensed project at `VeinDevTtv/BeliefTown` with a minimal quick start, package metadata, issue forms, pull request template, and dependency update configuration.
