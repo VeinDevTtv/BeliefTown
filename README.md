@@ -21,6 +21,10 @@ BeliefTown is a complete, local research implementation: a simulator, exact Baye
 
 ## Start here
 
+[Try the recorded demo](https://www.aitbourich.com/belieftown/demo/) · [Read the article](https://www.aitbourich.com/blog/belieftown-npcs-can-be-wrong)
+
+The hosted demo uses precomputed verified results. Run locally for new interventions.
+
 Clone the repository and create a local environment:
 
 ```bash
