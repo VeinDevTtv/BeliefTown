@@ -1,4 +1,5 @@
 import json
+import os
 import subprocess
 import sys
 from belieftown.cli import main
@@ -25,3 +26,13 @@ def test_cli_doctor_generate_errors(tmp_path,capsys):
 def test_module_entrypoint():
     r=subprocess.run([sys.executable,'-m','belieftown','--version'],capture_output=True,text=True)
     assert r.returncode==0 and '1.0.0' in r.stdout
+
+
+def test_help_with_legacy_windows_output_encoding():
+    env = dict(os.environ, PYTHONIOENCODING='cp1252')
+    result = subprocess.run(
+        [sys.executable, '-m', 'belieftown', '--help'],
+        capture_output=True, env=env,
+    )
+    assert result.returncode == 0, result.stderr.decode('cp1252')
+    assert b'reproduce' in result.stdout

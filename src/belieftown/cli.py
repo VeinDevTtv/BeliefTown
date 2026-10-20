@@ -66,7 +66,7 @@ def parser():
     nb.add_argument('--directory',type=Path,default=Path('notebooks'));nb.add_argument('--output',type=Path,default=Path('artifacts/executed_notebooks'))
     nb.add_argument('--timeout',type=int,default=240)
     nb.add_argument('--run-root',type=Path,help='Use a reproduction directory containing data/checkpoints/evaluation')
-    reproduce=sub.add_parser('reproduce',help='One-command data → training → evaluation → showcase pipeline')
+    reproduce=sub.add_parser('reproduce',help='One-command data, training, evaluation, and showcase pipeline')
     reproduce.add_argument('--profile',choices=('quick','release'),default='quick');reproduce.add_argument('--output',type=Path,default=Path('artifacts/reproduction'))
     reproduce.add_argument('--notebooks',action='store_true')
     sub.add_parser('doctor',help='Report installed optional components and verify the canonical scene')
