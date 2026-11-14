@@ -1,0 +1,22 @@
+name: issue-1-workspace
+on:
+  push:
+    branches: [fix/issue-1-readiness]
+    paths: [.github/workflows/issue-1-workspace.yml]
+permissions:
+  contents: read
+jobs:
+  source-snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Export tracked source for isolated verification
+        run: git archive --format=zip --output="$RUNNER_TEMP/belieftown-source.zip" HEAD
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: issue-1-source-snapshot
+          path: ${{ runner.temp }}/belieftown-source.zip
+          retention-days: 1
+          if-no-files-found: error
